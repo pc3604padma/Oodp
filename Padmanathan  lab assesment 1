@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+
+class Product {
+private:
+    std::string name;
+    int productID;
+    double pricePerUnit;
+    int stock;
+    std::string supplier;
+
+public:
+    Product(std::string pname, int id, double price, int availableStock, std::string supplierName)
+        : name(pname), productID(id), pricePerUnit(price), stock(availableStock), supplier(supplierName) {}
+
+    void displayProductDetails() const {
+        std::cout << "Product ID: " << productID
+                  << "\nName: " << name
+                  << "\nPrice per Unit: $" << pricePerUnit
+                  << "\nStock Available: " << stock
+                  << "\nSupplier: " << supplier
+                  << "\n---------------------------\n";
+    }
+
+    double calculateInventoryValue() const {
+        return pricePerUnit * stock;
+    }
+
+    bool needsRestocking() const {
+        return stock < 10;
+    }
+};
+
+int main() {
+    std::vector<Product> inventory = {
+        Product("Laptop", 101, 750.99, 15, "TechSupplier Inc."),
+        Product("Wireless Mouse", 102, 25.49, 8, "GadgetWorld Ltd."),
+        Product("Keyboard", 103, 45.99, 5, "GadgetWorld Ltd."),
+        Product("Monitor", 104, 150.00, 20, "ScreenPro Distributors"),
+        Product("USB Cable", 105, 10.00, 3, "CableTech Solutions")
+    };
+
+    std::cout << "------ Product Inventory ------\n";
+    for (const auto& product : inventory) {
+        product.displayProductDetails();
+    }
+
+    double totalValue = 0.0;
+    for (const auto& product : inventory) {
+        totalValue += product.calculateInventoryValue();
+    }
+    std::cout << "\nTotal Inventory Value: $" << totalValue << "\n";
+
+    std::cout << "\n------ Restocking Alerts ------\n";
+    for (const auto& product : inventory) {
+        if (product.needsRestocking()) {
+            std::cout << "ALERT: Product ID " << product.needsRestocking()
+                      << " (" << product.calculateInventoryValue() << ") needs restocking!\n";
+        }
+    }
+
+    return 0;
+}
