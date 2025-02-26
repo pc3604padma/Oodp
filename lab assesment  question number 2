@@ -1,0 +1,33 @@
+#include <iostream>
+
+void reverseArray(int* start, int* end) {
+    while (start < end) {
+        int temp = *start;
+        *start = *end;
+        *end = temp;
+        start++;
+        end--;
+    }
+}
+
+void displayArray(int* arr, int size) {
+    for (int* ptr = arr; ptr < arr + size; ptr++) {
+        std::cout << *ptr << " ";
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    int arr[] = {10, 20, 30, 40, 50};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    std::cout << "Original Array: ";
+    displayArray(arr, size);
+
+    reverseArray(arr, arr + size - 1);
+
+    std::cout << "Reversed Array: ";
+    displayArray(arr, size);
+
+    return 0;
+}
